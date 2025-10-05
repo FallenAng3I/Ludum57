@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class FadeController : MonoBehaviour
 {
+    [Header("Settings")]
     public Image fadeImage;
-    public float fadeSpeed = 1.5f;
+    [Range(0.5f, 5f)] public float fadeDuration = 1.5f;
 
     private void Awake()
     {
@@ -15,27 +16,33 @@ public class FadeController : MonoBehaviour
 
     public IEnumerator FadeOut()
     {
+        float time = 0f;
         Color color = fadeImage.color;
-        while (color.a < 1f)
+
+        while (time < fadeDuration)
         {
-            color.a += Time.deltaTime * fadeSpeed;
-            fadeImage.color = color;
+            float alpha = Mathf.Lerp(0f, 1f, time / fadeDuration);
+            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            time += Time.deltaTime;
             yield return null;
         }
-        color.a = 1f;
-        fadeImage.color = color;
+
+        fadeImage.color = new Color(color.r, color.g, color.b, 1f);
     }
 
     public IEnumerator FadeIn()
     {
+        float time = 0f;
         Color color = fadeImage.color;
-        while (color.a > 0f)
+
+        while (time < fadeDuration)
         {
-            color.a -= Time.deltaTime * fadeSpeed;
-            fadeImage.color = color;
+            float alpha = Mathf.Lerp(1f, 0f, time / fadeDuration);
+            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            time += Time.deltaTime;
             yield return null;
         }
-        color.a = 0f;
-        fadeImage.color = color;
+
+        fadeImage.color = new Color(color.r, color.g, color.b, 0f);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Door : MonoBehaviour
@@ -55,21 +56,21 @@ public class Door : MonoBehaviour
             StartCoroutine(SwitchRoom());
         }
     }
-
-    private System.Collections.IEnumerator SwitchRoom()
+    private IEnumerator SwitchRoom()
     {
         isTransitioning = true;
 
-        // Плавное затемнение
+        // затемнение
         yield return fadeController.FadeOut();
 
-        // Переключаем комнаты
+        // переключение комнат
         currentRoom.SetActive(false);
         targetRoom.SetActive(true);
 
-        // Плавное появление
+        // осветление
         yield return fadeController.FadeIn();
 
         isTransitioning = false;
     }
+
 }
