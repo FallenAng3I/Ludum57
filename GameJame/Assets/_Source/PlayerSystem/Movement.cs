@@ -1,24 +1,27 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace PlayerSystem
 {
-    public float moveSpeed = 5f;
-    private Rigidbody2D rb;
-
-    void Start()
+    public class PlayerMovement : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody2D>();
-    }
+        public float moveSpeed = 5f;
+        private Rigidbody2D rb;
 
-    void Update()
-    {
-        Move();
-    }
+        public void Start()
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
 
-    void Move()
-    {
-        float moveInput = Input.GetAxis("Horizontal");
-        Vector2 movement = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        rb.velocity = movement;
+        public void Update()
+        {
+            Move();
+        }
+
+        private void Move()
+        {
+            float moveInput = Input.GetAxis("Horizontal");
+            Vector2 movement = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            rb.velocity = movement;
+        }
     }
 }
