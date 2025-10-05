@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 07505cb096955d74e9a3273eac0fe2e9
+guid: 05ef5716d06b84747aaa76b4dd85bcaf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8745742072161453672
-    second: pngtree-black-interior-closed-door-and-frame-png-image_11606182_0
+      213: -4571828015118065507
+    second: back_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pngtree-black-interior-closed-door-and-frame-png-image_11606182_0
+      name: back_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 360
-        height: 360
+        width: 7680
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8664f54e31e1f5970800000000000000
-      internalID: 8745742072161453672
+      spriteID: d9065b094aa9d80c0800000000000000
+      internalID: -4571828015118065507
       vertices: []
       indices: 
       edges: []

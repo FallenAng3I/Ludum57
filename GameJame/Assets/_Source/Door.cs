@@ -1,52 +1,75 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class Door : MonoBehaviour
 {
-    [Header("Door Settings")]
+    [Header("Door Sprites")]
     public Sprite closedDoor;
     public Sprite activeDoor;
-    public string roomName;
 
-    [Header("UI Elements")]
-    public GameObject ePrompt;
-    public TextMeshProUGUI roomNameText;
+    [Header("Linked Objects")]
+    public GameObject ePrompt;         // иконка "E" над игроком
+    public GameObject roomLabel;       // PNG над дверью
+    public FadeController fadeController;
+    public GameObject currentRoom;
+    public GameObject targetRoom;
 
     private SpriteRenderer spriteRenderer;
+    private bool canInteract = false;
+    private bool isTransitioning = false;
 
-    void Start()
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = closedDoor;
 
         if (ePrompt) ePrompt.SetActive(false);
-        if (roomNameText) roomNameText.gameObject.SetActive(false);
+        if (roomLabel) roomLabel.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            spriteRenderer.sprite = activeDoor;
+        if (!other.CompareTag("Player")) return;
 
-            if (ePrompt) ePrompt.SetActive(true);
-            if (roomNameText)
-            {
-                roomNameText.text = roomName;
-                roomNameText.gameObject.SetActive(true);
-            }
-        }
+        spriteRenderer.sprite = activeDoor;
+        canInteract = true;
+
+        if (ePrompt) ePrompt.SetActive(true);
+        if (roomLabel) roomLabel.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            spriteRenderer.sprite = closedDoor;
+        if (!other.CompareTag("Player")) return;
 
-            if (ePrompt) ePrompt.SetActive(false);
-            if (roomNameText) roomNameText.gameObject.SetActive(false);
+        spriteRenderer.sprite = closedDoor;
+        canInteract = false;
+
+        if (ePrompt) ePrompt.SetActive(false);
+        if (roomLabel) roomLabel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (canInteract && !isTransitioning && Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(SwitchRoom());
         }
+    }
+
+    private System.Collections.IEnumerator SwitchRoom()
+    {
+        isTransitioning = true;
+
+        // Плавное затемнение
+        yield return fadeController.FadeOut();
+
+        // Переключаем комнаты
+        currentRoom.SetActive(false);
+        targetRoom.SetActive(true);
+
+        // Плавное появление
+        yield return fadeController.FadeIn();
+
+        isTransitioning = false;
     }
 }
